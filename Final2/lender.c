@@ -238,6 +238,8 @@ void inquiry() {
 	void * thread_return;
 	char* fl = "ac";
 
+	puts("채팅을 시작합니다.");
+
 	write(clnt_sock, fl, strlen(fl));
 
 	pthread_create(&snd_thread, NULL, send_msg, (void*)&clnt_sock);

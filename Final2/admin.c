@@ -106,7 +106,7 @@ void initTCP(int argc, char *argv[]) {
 
 int getMenu()
 {
-	char select;
+	int select;
 
 	set_tty_cr_mode();
 	set_tty_nonecho_mode();
@@ -116,7 +116,8 @@ int getMenu()
 	printf("3. 문의 응답\n");
 	select = getchar();
 	tty_mode(1);
-	return select;
+
+	return select - '0';
 }
 
 void printRequest(struct info **infos)
@@ -178,7 +179,6 @@ struct info **getRequests() {
 
 		buff[buff_len] = 0;
 		strcpy(info_ptr->CRName, buff);
-		puts(info_ptr->CRName);
 
 		//studentName
 		size = 0;
@@ -193,7 +193,6 @@ struct info **getRequests() {
 
 		buff[buff_len] = 0;
 		strcpy(info_ptr->studentName, buff);
-		puts(info_ptr->studentName);
 
 		//studentNumber
 		size = 0;
@@ -286,6 +285,9 @@ void inquiry() {
 	pthread_t snd_thread, rcv_thread;
 	void * thread_return;
 	char* fl = STARTCHAT;
+
+	puts("채팅을 시작합니다.");
+
 	write(clnt_sock, fl, strlen(fl));
 
 	pthread_create(&snd_thread, NULL, send_msg, (void*)&clnt_sock);
